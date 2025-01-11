@@ -29,4 +29,13 @@ public class DepartmentServiceImpl implements DepartmentService {
 
         return savedDepartmentDto;
     }
+
+    @Override
+    public DepartmentDto getDepartment(String code) {
+
+        Department department = repository.findByDepartmentCode(code);
+        DepartmentDto departmentDto = DepartmentMapper.maptoDepartmentDto(department);
+
+        return departmentDto;
+    }
 }
