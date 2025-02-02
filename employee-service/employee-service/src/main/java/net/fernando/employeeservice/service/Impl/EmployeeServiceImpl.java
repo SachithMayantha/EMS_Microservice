@@ -7,6 +7,7 @@ import net.fernando.employeeservice.dto.EmployeeDto;
 import net.fernando.employeeservice.entity.Employee;
 import net.fernando.employeeservice.mapper.EmployeeMapper;
 import net.fernando.employeeservice.repository.EmployeeRepository;
+import net.fernando.employeeservice.service.APIClient;
 import net.fernando.employeeservice.service.EmployeeService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -19,8 +20,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private EmployeeRepository repository;
 
-    private WebClient webClient;
+//    private WebClient webClient;
 //    private RestTemplate restTemplate;
+    private APIClient apiClient;
     @Override
     public EmployeeDto saveEmployee(EmployeeDto employeeDto) {
 
@@ -37,17 +39,19 @@ public class EmployeeServiceImpl implements EmployeeService {
 //
 //        DepartmentDto departmentDto = responseEntity.getBody();
 
-        // get() get the webclient instance
-        DepartmentDto departmentDto = webClient.get()
-                // call department application API
-                .uri("http://localhost:8080/api/departments/" + employee.getDepartmentCode())
-                // fetch the response (body) from the server
-                .retrieve()
-                // convert (map) response body into single DepartmentDto Object
-                .bodyToMono(DepartmentDto.class)
-                // block the thread until the Mono completes and returns the actual value (DepartmentDto)
-                // Synchronous call
-                .block();
+//        // get() get the webclient instance
+//        DepartmentDto departmentDto = webClient.get()
+//                // call department application API
+//                .uri("http://localhost:8080/api/departments/" + employee.getDepartmentCode())
+//                // fetch the response (body) from the server
+//                .retrieve()
+//                // convert (map) response body into single DepartmentDto Object
+//                .bodyToMono(DepartmentDto.class)
+//                // block the thread until the Mono completes and returns the actual value (DepartmentDto)
+//                // Synchronous call
+//                .block();
+
+        DepartmentDto departmentDto = apiClient.getDepartment(employee.getDepartmentCode());
 
         EmployeeDto employeeDto = EmployeeMapper.mapToEmployeeDto(employee);
 
